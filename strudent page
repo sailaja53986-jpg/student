@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Login</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#4facfe,#00f2fe);
+}
+
+.login-box{
+    width:350px;
+    background:#fff;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+.login-box h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.input-box{
+    margin-bottom:15px;
+}
+
+.input-box input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    outline:none;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#4facfe;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#00c6fb;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h2>Student Login</h2>
+
+<form id="studentForm">
+
+<div class="input-box">
+<input type="text" id="student_name" placeholder="Student Name" required>
+</div>
+
+<div class="input-box">
+<input type="text" id="reg_number" placeholder="Registration Number" required>
+</div>
+
+<button type="submit">Submit</button>
+
+</form>
+
+</div>
+
+<script>
+
+const SUPABASE_URL = "https://ipudyahkijaofyuhzdtv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_sEOEdQLjc99aRtQPVEPDTQ_PczbVtB3";
+
+const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+document.getElementById("studentForm").addEventListener("submit", async (e) => {
+
+e.preventDefault();
+
+const student_name = document.getElementById("student_name").value;
+const reg_number = document.getElementById("reg_number").value;
+
+const { data, error } = await client
+.from("students")
+.insert([
+{
+student_name: student_name,
+reg_number: reg_number
+}
+]);
+
+if(error){
+alert("Error: " + error.message);
+}else{
+alert("Login Successful");
+}
+
+});
+
+</script>
+
+</body>
+</html>
